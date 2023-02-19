@@ -16,18 +16,9 @@ app.engine('.hbs', engine({extname: ".hbs"}))
 app.set('view engine', '.hbs')
 
 
-// Routes
-app.get("/", (req, res) => {
-  res.render("home", {
-    title: 'Home page'
-  })
-})
-
-app.get("/posters", (req, res) => {
-  res.render("posters", {
-    title: 'posters page'
-  })
-})
+// Initialize Routes
+app.use('/', require('./routes/homeRoutes'))
+app.use('/posters', require('./routes/posterRoutes'))
 
 const PORT = process.env.PORT || 5000
 
