@@ -1,6 +1,7 @@
 const {v4} = require('uuid')
 const { addNewPosterToDB, getAllPosters, getPosterById } = require('../db/posters')
 
+
 //@route       GET /posters
 //@descr       Get All posters
 //@access      Public
@@ -14,6 +15,7 @@ const getPostersPage = async (req, res) => {
   })
 }
 
+
 //@route       GET /posters/add
 //@descr       Get add-posters page
 //@access      Private
@@ -23,6 +25,7 @@ const addNewPosterPage = (req, res) => {
     url: process.env.URL
   })
 }
+
 
 //@route       Post /posters/add
 //@descr       Post new poster
@@ -41,18 +44,37 @@ const addNewPoster = async (req, res) => {
  
 }
 
+
 //@route       GET /posters/:id
 //@descr       Get poster by id
 //@access      Public
 const getOnePoster = async (req, res) => {
-  const poster = await getPosterById(req.params.id)
-  res.render("poster/one", {
-    title: poster.title,
-    url: process.env.URL,
-    poster
-  })
-  console.log(poster)
+  try {
+    const poster = await getPosterById(req.params.id)
+    res.render("poster/one", {
+      title: poster.title,
+      url: process.env.URL,
+      poster
+    })
+  } catch (err) {
+    console.log(err)
+  }
+}
 
+
+
+//@route       GET /posters/:id/edit
+//@descr       Get edit poster page
+//@access      Private (own)
+const getEditPosterPage = async (req, res) => {
+  try {
+    res.render("poster/edit-poster", {
+      title: "Edit page",
+      url: process.env.URL,
+    })
+  } catch (err) {
+    console.log(err)
+  }
 }
 
 
@@ -63,5 +85,6 @@ module.exports = {
   getPostersPage,
   addNewPosterPage,
   addNewPoster,
-  getOnePoster
+  getOnePoster,
+  getEditPosterPage
 }
