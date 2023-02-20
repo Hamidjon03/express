@@ -2,7 +2,8 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="card p-4 mb-5">
-        <form action="/posters/edit" method="POST">
+        {{#if poster}}
+        <form action="/posters/{{poster.id}}/edit" method="POST">
           <div class="mb-3">
             <label for="title" class="form-label">E'lon sarlavhasi</label>
             <input 
@@ -11,6 +12,7 @@
               placeholder="Noutbuk Acer" 
               id="title"
               name="title"
+              value="{{poster.title}}"
               >
           </div>
           <div class="mb-3">
@@ -21,6 +23,7 @@
               placeholder="500 000" 
               id="amount"
               name="amount"
+              value="{{poster.amount}}"
               >
           </div>
           <div class="mb-3">
@@ -53,17 +56,19 @@
               type="text" 
               id="image"
               name="image"
+              value="{{poster.image}}"
               >
           </div>
           <div class="mb-3">
-            <label for="describe" class="form-label">Tarif</label>
-            <textarea name="description"></textarea>
+            <label for="description" class="form-label">Tarif</label>
+            <textarea name="description">{{poster.description}}</textarea>
             
           </div>
           <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary">O'zgartirish</button>
           </div>
         </form>
+        {{/if}}
       </div>
     </div>
   </div>

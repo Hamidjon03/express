@@ -1,5 +1,5 @@
 const {v4} = require('uuid')
-const { addNewPosterToDB, getAllPosters, getPosterById } = require('../db/posters')
+const { addNewPosterToDB, getAllPosters, getPosterById, editPosterById, deletePosterById } = require('../db/posters')
 
 
 //@route       GET /posters
@@ -47,7 +47,7 @@ const addNewPoster = async (req, res) => {
 
 //@route       GET /posters/:id
 //@descr       Get poster by id
-//@access      Public
+//@access      Public 
 const getOnePoster = async (req, res) => {
   try {
     const poster = await getPosterById(req.params.id)
@@ -68,9 +68,11 @@ const getOnePoster = async (req, res) => {
 //@access      Private (own)
 const getEditPosterPage = async (req, res) => {
   try {
+    const poster = await getPosterById(req.params.id)
     res.render("poster/edit-poster", {
       title: "Edit page",
       url: process.env.URL,
+      poster
     })
   } catch (err) {
     console.log(err)
@@ -78,6 +80,37 @@ const getEditPosterPage = async (req, res) => {
 }
 
 
+//@route       Post /posters/:id/edit
+//@descr       Edit poster page
+//@access      Private (own)
+const updatePoster = async (req, res) => {
+  try {
+    const editedPoster = {
+      title: req.body.title,
+      amount: req.body.amount,
+      image: req.body.image,
+      region: req.body.region,
+      description: req.body.description,
+    }
+    await editPosterById(req.params.id, editedPoster)
+    res.redirect('/posters')
+  } catch (err) {
+    console.log(err)
+  }
+}
+
+
+//@route       Post /posters/:id/delete
+//@descr       Delete poster page
+//@access      Private (own)
+const deletePoster = async (req, res) => {
+  try {
+    await deletePosterById(req.params.id)
+    res.redirect('/posters')
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 
 
@@ -86,5 +119,7 @@ module.exports = {
   addNewPosterPage,
   addNewPoster,
   getOnePoster,
-  getEditPosterPage
+  getEditPosterPage,
+  updatePoster,
+  deletePoster
 }
