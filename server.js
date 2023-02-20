@@ -8,6 +8,10 @@ const {engine} = require('express-handlebars')
 // Config DOTENV
 dotenv.config()
 
+// Body parser
+app.use(express.json())
+app.use(express.urlencoded({extended: false}))
+
 // Config static folder
 app.use(express.static(path.join(__dirname, 'public')))
 
