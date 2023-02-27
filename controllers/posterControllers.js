@@ -1,4 +1,5 @@
-const {v4} = require('uuid')
+const Poster = require('../models/posterModel')
+const { v4 } = require('uuid')
 const { addNewPosterToDB, getAllPosters, getPosterById, editPosterById, deletePosterById } = require('../db/posters')
 
 
@@ -6,13 +7,17 @@ const { addNewPosterToDB, getAllPosters, getPosterById, editPosterById, deletePo
 //@descr       Get All posters
 //@access      Public
 const getPostersPage = async (req, res) => {
-  const posters = await getAllPosters();
+  try {
+    const posters = await Poster.find().lean()
+    res.render("poster/posters", {
+      title: 'Posters page',
+      url: process.env.URL,
+      posters: posters.reverse()
+    })
+  } catch (err) {
+    console.log(err)
+  }
 
-  res.render("poster/posters", {
-    title: 'Posters page',
-    url: process.env.URL,
-    posters
-  })
 }
 
 
@@ -31,17 +36,20 @@ const addNewPosterPage = (req, res) => {
 //@descr       Post new poster
 //@access      Private
 const addNewPoster = async (req, res) => {
-  const poster = {
-    id: v4(),
-    title: req.body.title,
-    amount: req.body.amount,
-    region: req.body.region,
-    image: req.body.image,
-    description: req.body.description,
+  try {
+    const poster = {
+      title: req.body.title,
+      amount: req.body.amount,
+      region: req.body.region,
+      image: req.body.image,
+      description: req.body.description,
+    }
+    await Poster.create(poster)
+    res.redirect('/posters')
+  } catch (err) {
+    console.log(err)
   }
-  await addNewPosterToDB(poster)
-  res.redirect('/posters')
- 
+
 }
 
 
