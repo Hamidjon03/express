@@ -3,8 +3,11 @@ const app = express()
 const path = require('path')
 const dotenv = require('dotenv')
 const {engine} = require('express-handlebars')
-const mongoose = require('mongoose')
+const connectDB = require('./config/db')
 
+
+// connectting to DB
+connectDB()
 
 // Config DOTENV
 dotenv.config()
@@ -25,15 +28,8 @@ app.set('view engine', '.hbs')
 app.use('/', require('./routes/homeRoutes'))
 app.use('/posters', require('./routes/posterRoutes'))
 
-// connect to DB
-const connectDB = async () => {
-  mongoose.set("strictQuery", false);
-  const connecting = await mongoose.connect('mongodb://localhost:27017/postersapp')
-  console.log(`MongoDB connected to: ${connecting.connection.host}`)
 
-}
 
-connectDB()
 
 const PORT = process.env.PORT || 5000
 
