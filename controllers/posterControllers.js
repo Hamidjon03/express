@@ -58,7 +58,7 @@ const addNewPoster = async (req, res) => {
 //@access      Public 
 const getOnePoster = async (req, res) => {
   try {
-    const poster = await getPosterById(req.params.id)
+    const poster = await Poster.findById(req.params.id).lean()
     res.render("poster/one", {
       title: poster.title,
       url: process.env.URL,
@@ -76,7 +76,7 @@ const getOnePoster = async (req, res) => {
 //@access      Private (own)
 const getEditPosterPage = async (req, res) => {
   try {
-    const poster = await getPosterById(req.params.id)
+    const poster = await Poster.findById(req.params.id).lean()
     res.render("poster/edit-poster", {
       title: "Edit page",
       url: process.env.URL,
@@ -100,7 +100,7 @@ const updatePoster = async (req, res) => {
       region: req.body.region,
       description: req.body.description,
     }
-    await editPosterById(req.params.id, editedPoster)
+    await Poster.findByIdAndUpdate(req.params.id, editedPoster)
     res.redirect('/posters')
   } catch (err) {
     console.log(err)
@@ -113,7 +113,7 @@ const updatePoster = async (req, res) => {
 //@access      Private (own)
 const deletePoster = async (req, res) => {
   try {
-    await deletePosterById(req.params.id)
+    await Poster.findByIdAndRemove(req.params.id)
     res.redirect('/posters')
   } catch (err) {
     console.log(err)
