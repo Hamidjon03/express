@@ -1,6 +1,5 @@
 const Poster = require('../models/posterModel')
 const { v4 } = require('uuid')
-const { addNewPosterToDB, getAllPosters, getPosterById, editPosterById, deletePosterById } = require('../db/posters')
 
 
 //@route       GET /posters
@@ -37,12 +36,13 @@ const addNewPosterPage = (req, res) => {
 //@access      Private
 const addNewPoster = async (req, res) => {
   try {
+    console.log(req.file)
     const poster = {
       title: req.body.title,
       amount: req.body.amount,
       region: req.body.region,
-      image: req.body.image,
       description: req.body.description,
+      image: 'uploads/' + req.file.filename
     }
     await Poster.create(poster)
     res.redirect('/posters')

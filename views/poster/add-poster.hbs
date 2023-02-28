@@ -1,36 +1,40 @@
+<script
+  src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"
+></script>
+
 <div class="container mtt">
   <div class="row">
     <div class="col-lg-12">
       <div class="card p-4 mb-5">
-        <form action="/posters/add" method="POST">
+        <form action="/posters/add" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
             <label for="title" class="form-label">E'lon sarlavhasi</label>
-            <input 
-              type="text" 
-              class="form-control" 
-              placeholder="Noutbuk Acer" 
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Noutbuk Acer"
               id="title"
               name="title"
-              >
+            />
           </div>
           <div class="mb-3">
             <label for="amount" class="form-label">Narxi (so'mda)</label>
-            <input 
-              type="number" 
-              class="form-control" 
-              placeholder="500 000" 
+            <input
+              type="number"
+              class="form-control"
+              placeholder="500 000"
               id="amount"
               name="amount"
-              >
+            />
           </div>
           <div class="mb-3">
             <label for="region" class="form-label">Hudud</label>
-            <select 
-              class="form-select" 
-              id="region" 
+            <select
+              class="form-select"
+              id="region"
               aria-label="Default select example"
               name="region"
-              >
+            >
               <option selected>Hududni tanlang</option>
               <option value="Toshkent">Toshkent</option>
               <option value="Qarshi">Qarshi</option>
@@ -48,17 +52,17 @@
           </div>
           <div class="mb-3">
             <label for="image" class="form-label">Rasm tanlang</label>
-            <input 
-              class="form-control" 
-              type="text" 
-              id="image"
-              name="image"
-              >
+            <input class="form-control" type="file" id="image" name="image" />
           </div>
           <div class="mb-3">
             <label for="describe" class="form-label">Tarif</label>
-            <textarea name="description"></textarea>
-            
+            <textarea id="editor" name="description"></textarea>
+            <script>
+              ClassicEditor .create( document.querySelector( '#editor' ) )
+              .then( editor => { console.log( editor ); } ) .catch( error => {
+              console.error( error ); } );
+            </script>
+
           </div>
           <div class="d-grid gap-2">
             <button type="submit" class="btn btn-primary">Kiritish</button>
