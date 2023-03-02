@@ -32,6 +32,8 @@ const posterSchema = new Schema({
     default: 1
   }
   
+}, {
+  timestamps: true
 })
 
 module.exports = model("Poster", posterSchema)

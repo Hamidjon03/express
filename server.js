@@ -27,6 +27,7 @@ app.set('view engine', '.hbs')
 // Initialize Routes
 app.use('/', require('./routes/homeRoutes'))
 app.use('/posters', require('./routes/posterRoutes'))
+app.use('/auth', require('./routes/authRoutes'))
 
 
 
