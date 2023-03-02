@@ -36,7 +36,6 @@ const addNewPosterPage = (req, res) => {
 //@access      Private
 const addNewPoster = async (req, res) => {
   try {
-    console.log(req.file)
     const poster = {
       title: req.body.title,
       amount: req.body.amount,
@@ -58,7 +57,7 @@ const addNewPoster = async (req, res) => {
 //@access      Public 
 const getOnePoster = async (req, res) => {
   try {
-    const poster = await Poster.findById(req.params.id).lean()
+    const poster = await Poster.findByIdAndUpdate(req.params.id, {$inc: {visits: 1}}, {new: true}).lean()
     res.render("poster/one", {
       title: poster.title,
       url: process.env.URL,

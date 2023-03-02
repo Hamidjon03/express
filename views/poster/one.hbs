@@ -19,13 +19,13 @@
                   <div class="card">
                     <div class="mb-3"><p class="card-text"><small class="text-muted">Joylangan sana - 11.07.2021 16:45</small></p></div>
                     <h3 class="poster-page-title">{{poster.title}}</h3>
-                    <h1 class="poster-page-amount mb-5">{{poster.amount}}</h1>
+                    <h1 class="poster-page-amount mb-5">{{poster.amount}} SO'M</h1>
                     <h5>Tavsif</h5>
-                    <p>{{poster.description}}</p>
+                    {{{poster.description}}}
                       <hr>
                       <div class="d-flex justify-content-between">
-                        <p>{{poster._id}}</p>
-                        <p>Ko'rildi: 1025</p>
+                        <p>ID: {{poster._id}}</p>
+                        <p>Ko'rildi: {{poster.visits}}</p>
                       </div>
                   </div>
                 </div>
