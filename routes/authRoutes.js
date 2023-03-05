@@ -6,6 +6,6 @@ const { getRegisterPage, getLoginPage, registerNewUser, loginUser } = require('.
 router.get('/login', getLoginPage)
 router.get('/signup', getRegisterPage)
 router.post('/signup', registerNewUser)
-router.post('/signup', loginUser)
+router.post('/login', loginUser)
 
 module.exports = router
