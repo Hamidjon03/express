@@ -25,15 +25,15 @@ const getRegisterPage = (req, res) => {
 //@access      Public
 const registerNewUser = async (req, res) => {
   try {
-    const {email, username, phone, password, password2, } = req.body
+    const { email, username, phone, password, password2, } = req.body
     // console.log(req.body)
-    const userExist = await User.findOne({ email})
+    const userExist = await User.findOne({ email })
 
-    if(userExist){
+    if (userExist) {
       return res.redirect('/auth/signup')
     }
 
-    if(password !== password2){
+    if (password !== password2) {
       return res.redirect('/auth/signup')
     }
 
@@ -46,9 +46,36 @@ const registerNewUser = async (req, res) => {
   }
 }
 
+//@route       Post /auth/login
+//@descr       Login user to website
+//@access      Public
+const loginUser = async (req, res) => {
+  try {
+    const userExist = await User.findOne({ email: req.body.email })
+    if (userExist) {
+      const matchPassword = userExist.password === req.body.password
+      if (matchPassword) {
+        req.session.user = userExist
+        req.session.isLogged = true
+        // console.log('authController line 60' + req.session.user)
+        req.session.save(err => {
+          if (err) throw err
+          res.redirect('/profile/' + req.session.user.username)
+        })
+      } else {
+        res.redirect('/auth/login')
+      }
+    } else {
+      res.redirect('/auth/login')
+    }
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 module.exports = {
   getLoginPage,
   getRegisterPage,
-  registerNewUser
+  registerNewUser,
+  loginUser
 }

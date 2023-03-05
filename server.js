@@ -1,12 +1,11 @@
 const express = require('express');
-const app = express()
 const path = require('path')
-const dotenv = require('dotenv')
-const {engine} = require('express-handlebars')
-const session = require("express-session")
+require('dotenv').config()
+const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
+const {engine} = require('express-handlebars')
 const connectDB = require('./config/db')
-
+const app = express()
 
 // Initialize session store
 const store = new MongoStore({
@@ -14,17 +13,16 @@ const store = new MongoStore({
   uri: process.env.MONGO_URI
 })
 
+
+
 // connectting to DB
 connectDB()
-
-// Config DOTENV
-dotenv.config()
 
 // Body parser
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-// session configuration
+// Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
