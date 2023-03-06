@@ -26,7 +26,8 @@ const getPostersPage = async (req, res) => {
 const addNewPosterPage = (req, res) => {
   res.render("poster/add-poster", {
     title: 'Add-poster page',
-    url: process.env.URL
+    url: process.env.URL,
+    user: req.session.user,
   })
 }
 
