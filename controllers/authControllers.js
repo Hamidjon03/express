@@ -8,6 +8,7 @@ const getLoginPage = (req, res) => {
   if (!req.session.isLogged) {
     res.render('auth/login', {
       title: 'Login',
+      loginError: req.flash('loginError'),
       url: process.env.URL
     })
   }
@@ -20,6 +21,7 @@ const getRegisterPage = (req, res) => {
   if (!req.session.isLogged) {
     res.render('auth/signup', {
       title: 'Registration',
+      regError: req.flash("regError"),
       url: process.env.URL
     })
   }
@@ -38,10 +40,12 @@ const registerNewUser = async (req, res) => {
     const userExist = await User.findOne({ email })
 
     if (userExist) {
+      req.flash('regError', "Bunday foydalanuvchi bazada bor")
       return res.redirect('/auth/signup')
     }
 
     if (password !== password2) {
+      req.flash('regError', "Parollar mos tushmayabdi")
       return res.redirect('/auth/signup')
     }
 
@@ -71,9 +75,11 @@ const loginUser = async (req, res) => {
           res.redirect('/profile/' + req.session.user.username)
         })
       } else {
+        req.flash('loginError', 'Noto`g`ri ma`lumot kiritildi')
         res.redirect('/auth/login')
       }
     } else {
+      req.flash('loginError', "Bunday foydalanuvchi mavjud emas")
       res.redirect('/auth/login')
     }
   } catch (err) {

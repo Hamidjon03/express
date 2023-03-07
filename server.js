@@ -3,6 +3,7 @@ const path = require('path')
 require('dotenv').config()
 const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
+const flash = require("connect-flash")
 const {engine} = require('express-handlebars')
 const connectDB = require('./config/db')
 const app = express()
@@ -29,6 +30,8 @@ app.use(session({
   saveUninitialized: false,
   store
 }))
+
+app.use(flash())
 
 // Config static folder
 app.use(express.static(path.join(__dirname, 'public')))
