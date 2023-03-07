@@ -11,26 +11,28 @@
         <div class="col-lg-8">
           <div class="row">
             <div class="card">
-                {{#if user}}
+                {{#if users}}
               <h3 class="poster-page-title">Foydalanuvchi haqida ma'lumot</h3>
-              <h1 class="poster-page-amount mb-5">{{user.username}}</h1>
+              <h1 class="poster-page-amount mb-5">{{users.username}}</h1>
               <h4>Qo'shimcha ma'lumotlar</h4>
               <hr>
               <div>
-                <h5 class="">Username: <small class="text-primary">{{user.username}}</small></h5>
-                <h5 class="">Telefon: <small class="text-primary">+{{user.phone}}</small></h5>
+                <h5 class="">Username: <small class="text-primary">{{users.username}}</small></h5>
+                <h5 class="">Telefon: <small class="text-primary">+{{users.phone}}</small></h5>
                 
               </div>
               <hr>
               <div class="d-flex justify-content-between">
-                <p>ID: {{user._id}}</p>
-                <p>E'lonlar soni: {{user.posters.length}}</p>
+                <p>ID: {{users._id}}</p>
+                <p>E'lonlar soni: {{users.posters.length}}</p>
               </div>
             </div>
             {{/if}}
           </div>
         </div>
-        <a href="/profile/change" class="btn mt-3 btn-success">O'zgartirish</a>
+        {{#if isMe}}
+          <a href="/profile/change" class="btn mt-3 btn-success">O'zgartirish</a>
+        {{/if}}
       </div>
     </div>
   </div>

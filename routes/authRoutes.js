@@ -7,6 +7,6 @@ router.get('/login', guest, getLoginPage)
 router.get('/signup', guest, getRegisterPage)
 router.post('/signup', guest, registerNewUser)
 router.post('/login', guest, loginUser)
-router.get('/logout', guest, logout)
+router.get('/logout', logout)
 
 module.exports = router

@@ -90,10 +90,14 @@ const loginUser = async (req, res) => {
 //@route       Get /auth/logout
 //@descr       Logout user
 //@access      Private
-const logout = (req, res) => {
-  req.session.destroy(() => {
-    res.redirect('/')
-  })
+const logout = async (req, res) => {
+  try {
+    req.session.destroy(() => {
+      res.redirect('/')
+    })
+  } catch (er) {
+    console.log(err)
+  }
 }
 
 module.exports = {

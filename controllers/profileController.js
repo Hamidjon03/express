@@ -10,9 +10,13 @@ const getProfilePage = async (req, res) => {
       .populate('posters')
       .lean()
     if(!user) throw new Error('Bunday foydalanuvchi mavjud emas')
+
+    const isMe = user._id == req.session.user._id.toString()
     res.render('user/profile', {
       title: `${user.username}`,
-      user,
+      users: user,
+      isMe,
+      user: req.session.user,
       posters: user.posters,
       isAuth: req.session.isLogged,
       url: process.env.URL
