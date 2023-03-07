@@ -2,9 +2,11 @@ const express = require('express');
 const path = require('path')
 require('dotenv').config()
 const session = require('express-session')
+const Handlebars = require("handlebars")
 const MongoStore = require('connect-mongodb-session')(session)
 const flash = require("connect-flash")
 const {engine} = require('express-handlebars')
+const helpers = require('./utils/hbsHelper')
 const connectDB = require('./config/db')
 const app = express()
 
@@ -22,6 +24,10 @@ connectDB()
 // Body parser
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
+
+
+// register handlebars helpers
+helpers(Handlebars)
 
 // Session configuration
 app.use(session({
