@@ -7,6 +7,22 @@ const User = require("../models/userModel")
 //@access      Public
 const getPostersPage = async (req, res) => {
   try {
+
+    if(req.query){
+      const {search} = req.query
+      const posters = await Poster.searchPartial(search, (err, data) => {
+        if(err) throw new Error
+      }).lean()
+      res.status(200).render('poster/searchResults', {
+        title: 'Search results',
+        user: req.session.user,
+        url: process.env.URL,
+        querySearch: req.query.search,
+        posters: posters.reverse()
+      })
+    }
+
+
     const posters = await Poster.find().lean()
     res.render("poster/posters", {
       title: 'Posters page',

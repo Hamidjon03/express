@@ -11,7 +11,12 @@ const getProfilePage = async (req, res) => {
       .lean()
     if(!user) throw new Error('Bunday foydalanuvchi mavjud emas')
 
-    const isMe = user._id == req.session.user._id.toString()
+    let isMe = false
+
+    if(req.session.user){
+      isMe = user._id == req.session.user._id.toString()
+    }
+
     res.render('user/profile', {
       title: `${user.username}`,
       users: user,
